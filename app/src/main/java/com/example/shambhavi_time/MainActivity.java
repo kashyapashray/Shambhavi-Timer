@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean timerRunning;
     private int currentRound = 0;
 
-    private final long[] roundTimes = {120000, 120000, 120000, 420000, 420000, 360000, 240000, 360000}; // Times for each round
+    private final long[] roundTimes = {120000, 120000, 120000, 390000, 420000, 360000, 240000, 360000}; // Times for each round
     private final long breakTime = 3000; // Break time is 10 seconds
     private final long extraBreakTime = 10000; // Extra break time is 15 seconds
 

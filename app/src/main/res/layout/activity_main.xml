@@ -41,6 +41,7 @@
         android:layout_below="@id/startButton"
         android:layout_centerHorizontal="true"
         android:text="Reset Timer"
+        android:backgroundTint="#EE4E4E"
         android:layout_marginTop="10dp" />
 
 </RelativeLayout>
