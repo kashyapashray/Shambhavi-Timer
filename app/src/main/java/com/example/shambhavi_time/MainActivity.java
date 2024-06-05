@@ -245,7 +245,6 @@ public class MainActivity extends AppCompatActivity {
         breakTimeLeft = savedInstanceState.getLong("breakTimeLeft");
         isBreak = savedInstanceState.getBoolean("isBreak");
         isPaused = savedInstanceState.getBoolean("isPaused");
-
         if (timerRunning) {
             if (isBreak) {
                 startBreak(breakTimeLeft);
@@ -289,7 +288,6 @@ public class MainActivity extends AppCompatActivity {
                 } else if (currentRound == 7) {
                     roundText = "Breathe";
                 }
-                startTimer(timeLeft, roundText);
                 roundTextView.setText(roundText);
             }
             startButton.setText("Start Timer");
