@@ -23,14 +23,15 @@ public class MainActivity extends AppCompatActivity {
     private int currentRound = 0;
 
     private final long[] roundTimes = {120000, 120000, 120000, 390000, 420000, 360000, 240000, 360000}; // Times for each round
-    private final long breakTime = 3000; // Break time is 10 seconds
-    private final long extraBreakTime = 10000; // Extra break time is 15 seconds
+    private final long breakTime = 3000; // Break time
+    private final long extraBreakTime = 10000; // Extra break time (for sukhasana break)
 
     private PowerManager.WakeLock wakeLock;
     private MediaPlayer mediaPlayer;
     private long timeLeft;
     private long breakTimeLeft;
     private boolean isBreak;
+    private boolean isPaused;
 
 
     @Override
@@ -55,7 +56,11 @@ public class MainActivity extends AppCompatActivity {
                 if (timerRunning) {
                     pauseTimer();
                 } else {
-                    startNextRound();
+                    if (isPaused) {
+                        resumeTimer();
+                    } else {
+                        startNextRound();
+                    }
                 }
             }
         });
@@ -149,9 +154,33 @@ public class MainActivity extends AppCompatActivity {
         startButton.setText("Pause Timer");
     }
 
+    private void resumeTimer() {
+        if (isBreak) {
+            startBreak(breakTimeLeft);
+        } else {
+            String roundText = "";
+            if(currentRound == 0){
+                roundText = "Patangasana";
+            } else if (currentRound == 1 || currentRound == 2) {
+                roundText = "Shishupalasana";
+            } else if (currentRound == 3) {
+                roundText = "Nadi Vibhajana";
+            } else if (currentRound == 4) {
+                roundText = "Sukhasana";
+            } else if (currentRound == 5) {
+                roundText = "Aum Chant";
+            } else if (currentRound == 6) {
+                roundText = "Vipareeta Shwasa";
+            } else if (currentRound == 7) {
+                roundText = "Breathe";
+            }
+            startTimer(timeLeft, roundText);
+        }
+    }
     private void pauseTimer() {
         countDownTimer.cancel();
         timerRunning = false;
+        isPaused = true;
         startButton.setText("Start Timer");
     }
 
@@ -203,6 +232,7 @@ public class MainActivity extends AppCompatActivity {
         outState.putLong("timeLeft", timeLeft);
         outState.putLong("breakTimeLeft", breakTimeLeft);
         outState.putBoolean("isBreak", isBreak);
+        outState.putBoolean("isPaused", isPaused);
     }
 
     @Override
@@ -214,6 +244,7 @@ public class MainActivity extends AppCompatActivity {
         timeLeft = savedInstanceState.getLong("timeLeft");
         breakTimeLeft = savedInstanceState.getLong("breakTimeLeft");
         isBreak = savedInstanceState.getBoolean("isBreak");
+        isPaused = savedInstanceState.getBoolean("isPaused");
 
         if (timerRunning) {
             if (isBreak) {
